@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class BookItem extends React.Component {
+class BookItem extends React.PureComponent {
 
   static propTypes = {
     bookItem: PropTypes.object.isRequired,
@@ -81,14 +81,23 @@ class BookItem extends React.Component {
     )
   }
 
+    function getBookCover(bookItem) {
+      if (bookItem.imageLinks) {
+        return <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookItem.imageLinks.smallThumbnail})` }}></div>
+      }
+      return <div className="book-no-cover"></div>
+    }
+
 /* SELECTABLE BOOKS */
     if (bookItem.shelf !== '') {
+
+
 
       return (
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookItem.imageLinks.smallThumbnail})` }}></div>
-            <div className="book-shelf-changer">
+          {getBookCover(bookItem)}
+          <div className="book-shelf-changer">
               <select defaultValue={defaultValue} onChange={event => this.onChangeBookShelf(bookItem, event.target.value)}>
                 <option value="moveTo" disabled>Move to...</option>
                   <option value="currentlyReading" disabled={this.currentlyReadingSelect}>Currently Reading</option>

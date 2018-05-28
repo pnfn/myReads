@@ -11,8 +11,7 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    var hasError = this.props
-    var error = this.props
+    const { hasError, error } = this.props
 
 /* ERROR MESSAGE AND BUTTON */
     if (hasError) {

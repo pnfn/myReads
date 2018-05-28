@@ -4,9 +4,14 @@ import BookItem from './BookItem'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 import sortBy from 'sort-by'
+import debounce from 'lodash.debounce'
 
 class SearchBooks extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.updateQuery = debounce(this.updateQuery,2000);
+  }
 /* Ading one more Book List array to work with Search */
   state = {
     query: '',
@@ -20,10 +25,7 @@ class SearchBooks extends React.Component {
 
 /* Catching eventual errors and providing a <BUTTON> (inside render()) to restar App */
   componentDidCatch(error) {
-    this.setState({
-      hasError: true,
-      error: error
-    })
+    this.setState({ error })
   }
 
 /* Main Change Bookshelf Function */
@@ -66,7 +68,7 @@ class SearchBooks extends React.Component {
   }
 
   render () {
-    
+
     return (
       <div className="search-books">
         <div className="search-books-bar">

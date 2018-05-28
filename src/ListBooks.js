@@ -24,15 +24,20 @@ class ListBooks extends React.Component {
     this.props.onChangeBookShelf(book, shelf, false)
   }
 
+/* Filter books based on shelf condition */
+  booksFilter = (books, shelf) => {
+    return books.filter( (bookItem) => bookItem.shelf === shelf)
+  }
+
   render () {
 
 /* Order Books Alphabetcally by Title */
-    this.props.state.books.sort(sortBy('title'))
+    const books = this.props.state.books.sort(sortBy('title'))
 
 /* DIFFERENT SHELF LOGIC  - Separates Books on diff lists based on SHELF */
-    let shelfCurrentlyReading = this.props.state.books.filter( (bookItem) => bookItem.shelf === 'currentlyReading')
-    let shelfWantToRead = this.props.state.books.filter( (bookItem) => bookItem.shelf === 'wantToRead')
-    let shelfRead = this.props.state.books.filter( (bookItem) => bookItem.shelf === 'read')
+    const shelfCurrentlyReading = this.booksFilter(books, 'currentlyReading')
+    const shelfWantToRead = this.booksFilter(books, 'wantToRead')
+    const shelfRead = this.booksFilter(books, 'read')
 
     return (
       <div className="list-books">
